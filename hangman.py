@@ -1,17 +1,11 @@
+#Import the files and libraries that will be used
 from data import ES_WORDS
 from data import EN_WORDS
 import variables
 import random
 import os
 
-def bcolors():
-    bcolors.OKGREEN = '\033[92m'
-    bcolors.FAIL = '\033[91m'
-    bcolors.ENDC = '\033[0m'
-    bcolors.BOLD = '\033[1m'
-
-
-def get_word():
+def get_word(): #returns a word from data file depending the chosen lenguage
     if menu.language == "1":
         word = random.choice(ES_WORDS)
     elif menu.language == "2":
@@ -21,7 +15,7 @@ def get_word():
 def menu():
     while True:
         title()
-        os.system ("echo '{}' | lolcat".format("1. Play"))
+        os.system ("echo '{}' | lolcat".format("1. Play")) #Output printed by console and passed trhough lolcat to give it a color
         os.system ("echo '{}' | lolcat".format("2. Exit"))
         choice = input("Enter your choice: ")
         if choice == "1":
@@ -43,15 +37,14 @@ def menu():
             continue
         
 def title():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    os.system ("echo '{}' | lolcat".format(variables.HANGMAN_TITLE)) #print title and pass it trough the terminal using lolcat
+    os.system('cls' if os.name == 'nt' else 'clear') #clears the terminal
+    os.system ("echo '{}' | lolcat".format(variables.HANGMAN_TITLE)) #prints title and pass it trough the terminal using lolcat
 
-def display_hangman(tries):
+def display_hangman(tries): #Takes the stages of the hangaman to print them later
    return variables.STATEGES[tries]
 
 def play(word):
-    word_completion = '_ '*len(word)
-    word_as_underscore = []
+    word_completion = '_ '*len(word) #saves the lenght of the word in underscores
     guessed = False
     guessed_letters = []
     guessed_words = []
@@ -64,29 +57,29 @@ def play(word):
     os.system ("echo '{}' | lolcat".format(display_hangman(tries)))
     os.system ("echo '{}' | lolcat".format(word_completion))
     print("\n")
-    while not guessed and tries > 0:
+    while not guessed and tries > 0: #while guessed is false and tries > 6 run the game (total tries = 6)
         guess = input("Please guess a letter or word: ").upper()
-        if len(guess) == 1 and guess.isalpha():
+        if len(guess) == 1 and guess.isalpha(): #Checks if the input is a letter
             if guess in guessed_letters:
-                print('\033[93m' + "You already guessed the letter" + '\033[0m', guess)
+                print('\033[93m' + "You already guessed the letter" + '\033[0m', guess) #print it in yellow
             elif guess not in word:
-                print('\033[91m' + guess, "is not in the word." + '\033[0m')
+                print('\033[91m' + guess, "is not in the word." + '\033[0m') #printed in red
                 tries -= 1
-                guessed_letters.append(guess)
+                guessed_letters.append(guess) #Appends the letter guessed to the list, to check if it arleady guessed later 
             else:
                 print('\033[92m' + "Good job,", guess, "is in the word!" + '\033[0m')
                 guessed_letters.append(guess)
-                word_completion = word_completion.replace(" ", "")
-                word_as_list = list(word_completion)
-                indices = [i for i, letter in enumerate(word) if letter == guess]
-                for index in indices:
+                word_completion = word_completion.replace(" ", "") #Takes out the spaces between the underscores 
+                word_as_list = list(word_completion) #Makes a list of thw word to check the index later
+                indices = [i for i, letter in enumerate(word) if letter == guess] #Checkd the index to change the underscore for a letter later
+                for index in indices: #replaces the underscore for a letter
                     word_as_list[index] = guess
                 word_completion = "".join(word_as_list)
-                word_completion = word_completion.replace("", " ") 
-                if "_" not in word_completion:
+                word_completion = word_completion.replace("", " ") #Adds the spaces again to make the word more legible  
+                if "_" not in word_completion: #If there are not more underscores then the word is already guessed
                     guessed = True
                     print(word_completion)
-        elif len(guess) == len(word) and guess.isalpha():
+        elif len(guess) == len(word) and guess.isalpha(): #Checks if the guess is a word instead of a letterls
             if guess in guessed_words:
                 print('\033[93m' + "You already guessed the word", guess + '\033[0m')
             elif guess != word:

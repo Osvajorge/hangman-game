@@ -85,6 +85,7 @@ STATEGES = [  # final state: head, torso, both arms, and both legs
                 """
     ]
 
+#This one is not in use, maybe it will in later versions
 alphabet = {
     'a': '▄▀█\n█▀█',
     'b': '█▄▄\n█▄█',
