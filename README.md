@@ -14,6 +14,7 @@ A classic word-guessing game implemented in Python with bilingual support (Engli
 <div align="center">
   
 ![Hangman Game Screenshot](https://i.imgur.com/LiEvCyv.png)
+
 *Main game interface showing the classic hangman drawing*
 
 ![Language Selection](https://i.imgur.com/GT7lPx1.png)
